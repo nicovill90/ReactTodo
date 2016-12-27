@@ -1,7 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const {Route, Router, IndexRoute, hashHistory} = require('react-router');
-let Example = require('Example');
+let TodoApp = require('TodoApp');
 
 // Load foundation
 $(document).foundation();
@@ -10,6 +10,6 @@ $(document).foundation();
 require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
-  <Example/>,
+  <TodoApp/>,
   document.getElementById('app')
 );
