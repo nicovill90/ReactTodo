@@ -1,5 +1,5 @@
 import moment from 'moment';
-import firebase, {firebaseRef} from 'app/firebase/'
+import firebase, {firebaseRef, githubProvider} from 'app/firebase/'
 
 export let setSearchText = (searchText) => {
   return {
@@ -63,24 +63,6 @@ export let startAddTodos = () => {
       dispatch(addTodos(todos));
     });
   };
-
-  // return (dispatch, getState) => {
-  //   let todosRef = firebaseRef.child('todos');
-  //
-  //   return todosRef.once('value').then((snapshot) => {
-  //     let todos = snapshot.val();
-  //     let parsedTodos = [];
-  //
-  //     Object.keys(todos).forEach((todoId) => {
-  //       parsedTodos.push({
-  //         id: todoId,
-  //         ...todos[todoId]
-  //       });
-  //     });
-  //
-  //     dispatch(addTodos(parsedTodos));
-  //   });
-  // };
 };
 
 export let updateTodo = (id, updates) => {
@@ -101,6 +83,24 @@ export let startToggleTodo = (id, completed) => {
 
     return todoRef.update(updates).then(() => {
       dispatch(updateTodo(id, updates));
+    });
+  };
+};
+
+export let startLogin = () => {
+  return (dispatch, getState) => {
+    return firebase.auth().signInWithPopup(githubProvider).then((result) => {
+      console.log('Auth OK', result);
+    }, (error) => {
+      console.log('error Auth', error);
+    });
+  };
+};
+
+export let startLogout = () => {
+  return (dispatch, getState) => {
+    return firebase.auth().signOut().then(() => {
+      console.log('Logged out');
     });
   };
 };

@@ -1,16 +1,26 @@
-const React = require('react');
-let uuid = require('node-uuid');
-const moment = require('moment');
+import React from 'react';
+import * as Redux from 'react-redux';
 
 import TodoList from 'TodoList';
 import AddTodo from 'AddTodo';
 import TodoSearch from 'TodoSearch';
+import * as actions from 'actions';
 
-let TodoApp = React.createClass({
-  render: function () {
+export let TodoApp = React.createClass({
+  onLogout(e) {
+    let {dispatch} = this.props;
+    e.preventDefault();
+
+    dispatch(actions.startLogout());
+  },
+  render() {
 
     return (
       <div>
+        <div className="page-actions">
+          <a href="#" onClick={this.onLogout}>Logout</a>
+        </div>
+
         <h1 className="page-title">Todo App</h1>
 
         <div className="row">
@@ -28,4 +38,4 @@ let TodoApp = React.createClass({
   }
 });
 
-module.exports = TodoApp;
+export default Redux.connect()(TodoApp);
