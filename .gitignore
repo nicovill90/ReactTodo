@@ -1,3 +1,4 @@
 node_modules/
 jsFeatures/
 public/bundle.js
+config/
