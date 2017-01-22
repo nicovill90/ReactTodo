@@ -47,6 +47,42 @@ export let addTodos = (todos) => {
   };
 };
 
+export let startAddTodos = () => {
+  return (dispatch, getState) => {
+    let todosRef = firebaseRef.child('todos');
+
+    return todosRef.once('value').then((snapshot) => {
+      let storedTodos = snapshot.val();
+      let todos = Object.keys(storedTodos).map((key) => {
+        return {
+          id: key,
+          ...storedTodos[key]
+        };
+      });
+
+      dispatch(addTodos(todos));
+    });
+  };
+
+  // return (dispatch, getState) => {
+  //   let todosRef = firebaseRef.child('todos');
+  //
+  //   return todosRef.once('value').then((snapshot) => {
+  //     let todos = snapshot.val();
+  //     let parsedTodos = [];
+  //
+  //     Object.keys(todos).forEach((todoId) => {
+  //       parsedTodos.push({
+  //         id: todoId,
+  //         ...todos[todoId]
+  //       });
+  //     });
+  //
+  //     dispatch(addTodos(parsedTodos));
+  //   });
+  // };
+};
+
 export let updateTodo = (id, updates) => {
   return {
     type: 'UPDATE_TODO',
