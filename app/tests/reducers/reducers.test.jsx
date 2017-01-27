@@ -54,7 +54,7 @@ describe('Reducers', () => {
           completedAt: 125
         }
       ];
-      var updates = {
+      let updates = {
         completed: false,
         completedAt: null
       };
@@ -88,6 +88,30 @@ describe('Reducers', () => {
 
       expect(res.length).toEqual(1);
       expect(res[0]).toEqual(todos[0]);
+    });
+  });
+
+  describe('authReducer', () => {
+    it('should store uid on LOGIN', () => {
+      let action = {
+        type: 'LOGIN',
+        uid: 123
+      };
+      let res = reducers.authReducer(undefined, df(action));
+
+      expect(res).toEqual({uid: action.uid});
+    });
+
+    it('should wipe auth on LOGOUT', () => {
+      let authData = {
+        uid: 123
+      };
+      let action = {
+        type: 'LOGOUT'
+      };
+      let res = reducers.authReducer(df(authData), df(action));
+
+      expect(res).toEqual({});
     });
   });
 });
